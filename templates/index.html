@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+    <title>Human Selling</title>
+
+    <meta content="김종하 판매중" property="og:title"/>
+    <meta content="돈 되는거 다 합니다!!" property="og:description"/>
+    <meta content="{{ url_for('static', filename='ogimage.jpeg') }}" />
+
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+
+<style>
+    * {
+        font-family: 'Oswald', sans-serif;
+    }
+
+    .intro_pic {
+
+        width: 800px;
+        height: 300px;
+        background-image: url("../static/ogimage.jpeg");
+        background-size: contain;
+        background-position: center;
+        border-radius: 10px;
+    }
+
+    .intro_desc {
+
+        width: 500px;
+        margin: 20px auto 20px auto;
+        text-align: center;
+    }
+
+    .order-box {
+        width: 800px;
+    }
+
+
+    .mybtn {
+        width: 100px;
+        margin: 0 auto 20px auto;
+        display: block;
+    }
+
+    .wrap {
+        margin: auto;
+        width: 800px;
+    }
+
+    .rate {
+        color: blue;
+    }
+
+</style>
+<script>
+
+    // 아래는 로딩되면 바로 실핼
+
+    $(document).ready(function(){
+        get_rate();
+        order_listing();
+    });
+
+    function order_listing() {
+        $.ajax({
+            type: "GET",
+            url: "/order",
+            data: {},
+            success: function (response) {
+                if (response["result"] === "success") {
+                    let orders = response['orders'];
+                    for (let i = 0; i < orders.length; i++) {
+                        let name = orders[i]['name'];
+                        let count = orders[i]['count'];
+                        let address = orders[i]['address'];
+                        let phone = orders[i]['phone'];
+
+                        let temp_html = `<tr>
+                                            <th scope="row">${name}</th>
+                                            <td>${count}</td>
+                                            <td>${address}</td>
+                                            <td>${phone}</td>
+                                        </tr>`
+                        $('#orders-box').append(temp_html)
+                    }
+                }
+            }
+        })
+    }
+
+    // 환율값 실시간으로 가져오기
+
+    function get_rate() {
+        $.ajax({
+            type: "GET",
+            url: "https://api.manana.kr/exchange/rate.json",
+            data: {},
+            success: function (response) {
+                let nowRate = response[1]['rate'];
+                $('#rate-box').text(nowRate);
+            }
+        })
+    }
+
+    function order() {
+
+        let name = $('#order-name').val();
+        let count = $('#order-count').val();
+        let address = $('#order-address').val();
+        let phone = $('#order-phone').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/order",
+            data: {name_give: name, count_give: count, address_give: address, phone_give: phone},
+            success: function (response) {
+                if (response["result"] === "success") {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            }
+        })
+    }
+
+</script>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="intro_pic"></div>
+    <div class="intro_desc">
+        <h1>Please Buy Me!</h1>
+        <h4>- Here you can buy my Ability and Creativity -</h4>
+        <p class="rate">EUR/KRW: <span id="rate-box">1,000</span></p>
+    </div>
+
+    <div class="order-box">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">주문자이름</span>
+            </div>
+            <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-name" type="text">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text">수량</label>
+            </div>
+            <select class="custom-select" id="order-count">
+                <option selected>-- 수량을 선택하세요 --</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">주소</span>
+            </div>
+            <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-address" type="text">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
+            </div>
+            <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-phone" type="text">
+        </div>
+        <button class="btn btn-primary mybtn" onclick="order()" type="button">Buy Now</button>
+    </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">수량</th>
+                <th scope="col">주소</th>
+                <th scope="col">전화번호</th>
+            </tr>
+            </thead>
+            <tbody id="orders-box">
+            </tbody>
+        </table>
+</div>
+
+
+</body>
+
+</html>
