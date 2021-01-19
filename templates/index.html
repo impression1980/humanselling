@@ -144,6 +144,38 @@
     $(document).ready(function(){
         get_rate();
         order_listing();
+
+        $('#order-name').keypress(function (e) {
+                    let key = e.which;
+                    if (key == 13) {
+
+                        $('#order-count').focus()
+                    }
+                });
+
+                 $('#order-count').keypress(function (e) {
+                    let key = e.which;
+                    if (key == 13) {
+                        $('#order-address').focus();
+
+                    }
+                });
+
+                 $('#order-address').keypress(function (e) {
+                    let key = e.which;
+                    if (key == 13) {
+                        $('#order-phone').focus();
+
+                    }
+                });
+
+
+                 $('#order-phone').keypress(function (e) {
+                    let key = e.which;
+                    if (key == 13) {
+                        $('#buynow').click();
+                    }
+                });
     });
 
     function order_listing() {
@@ -251,7 +283,7 @@
             </div>
             <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-phone" type="text">
         </div>
-        <button class="btn btn-primary mybtn" onclick="order()" type="button">Buy Now</button>
+        <button class="btn btn-primary mybtn" id="buynow"  onclick="order()" type="button">Buy Now</button>
     </div>
 
         <table class="table">
