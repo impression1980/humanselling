@@ -25,7 +25,7 @@
 
     <meta content="김종하 판매중" property="og:title"/>
     <meta content="돈 되는거 다 합니다!!" property="og:description"/>
-    <meta content="{{ url_for('static', filename='ogimage.jpeg') }}" />
+    <meta content="{{ url_for('static', filename='ogimage.jpeg') }}" property="og:image"/>
 
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
@@ -73,6 +73,69 @@
         color: blue;
     }
 
+    @media screen and (max-width: 375px) {
+
+        .wrap {
+        margin: auto;
+        width: 375px;
+        }
+
+        .intro_pic {
+            width: 385px;
+            height: 190px;
+
+        }
+
+        .intro_desc {
+            width: 300px;
+
+        }
+
+        .order-box {
+
+            width: 320px;
+            height: 300px;
+            margin: auto;
+        }
+
+        .mybtn {
+        width: 100px;
+        margin: 0 auto 20px auto;
+        display: block;
+    }
+    }
+    @media screen and (max-width: 414px) {
+
+        .wrap {
+        margin: auto;
+        width: 400px;
+        margin: auto;
+        }
+
+        .intro_pic {
+            width: 385px;
+            height: 190px;
+
+        }
+
+        .intro_desc {
+            width: 300px;
+
+        }
+
+        .order-box {
+
+            width: 320px;
+            height: 300px;
+            margin: auto;
+        }
+
+        .mybtn {
+        width: 100px;
+        margin: 0 auto 20px auto;
+        display: block;
+    }
+    }
 </style>
 <script>
 
