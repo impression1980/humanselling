@@ -21,6 +21,8 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
+
+
     <title>Human Selling</title>
 
     <meta content="김종하 판매중" property="og:title"/>
@@ -145,6 +147,10 @@
         get_rate();
         order_listing();
 
+        $("input:text[numberOnly]").on("keyup", function () {
+            $(this).val($(this).val().replace(/[^0-9]/g, ""));
+        });
+
         $('#order-name').keypress(function (e) {
                     let key = e.which;
                     if (key == 13) {
@@ -198,7 +204,10 @@
                                             <td>${address}</td>
                                             <td>${phone}</td>
                                         </tr>`
-                        $('#orders-box').append(temp_html)
+                        // 새 정보 아래로 붙이기와 위로 붙이기
+                        // $('#orders-box').append(temp_html)
+                         $("#orders-box").prepend(temp_html)
+
                     }
                 }
             }
@@ -281,7 +290,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
             </div>
-            <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-phone" type="text">
+            <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control" id="order-phone" type="text" numberOnly />
         </div>
         <button class="btn btn-primary mybtn" id="buynow"  onclick="order()" type="button">Buy Now</button>
     </div>
