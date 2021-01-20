@@ -28,6 +28,7 @@ def save_order():
         'count':count_receive,
         'address':address_receive,
         'phone':phone_receive
+
            }
     db.humanselling.insert_one(doc)
 
