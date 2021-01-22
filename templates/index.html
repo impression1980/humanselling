@@ -19,7 +19,7 @@
     <script crossorigin="anonymous"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <title>Human Selling</title>
 
@@ -165,6 +165,12 @@
         $(document).ready(function () {
             get_rate();
             order_listing();
+            Swal.fire({
+                    icon: 'success',
+                    title: 'Hey! I got you!!',
+                    text: "Don't play the fool. You're so busted!",
+                });
+
 
 
                 //직접입력 인풋박스 기존에는 숨어있다가
@@ -184,8 +190,8 @@
                         $("#selboxDirect").hide();
 
                     }
-                })
-            });
+                });
+
 
 
             // 아래는 150 이하의 숫자만 입력 가능(정규식)
@@ -219,7 +225,6 @@
             $('#order-name').keypress(function (e) {
                 let key = e.which;
                 if (key == 13) {
-
                     $('#order-count').focus()
                 }
             });
@@ -227,7 +232,7 @@
             $('#order-count').keypress(function (e) {
                 let key = e.which;
                 if (key == 13) {
-                    $('#order-address').focus();
+                    $('#order-address').focus()
 
                 }
             });
@@ -243,18 +248,28 @@
             $('#order-address').keypress(function (e) {
                 let key = e.which;
                 if (key == 13) {
-                    $('#order-phone').focus();
+                    $('#order-phone').focus()
 
                 }
             });
 
+        });
 
-            $('#order-phone').keypress(function (e) {
-                let key = e.which;
-                if (key == 13) {
-                    $('#buynow').click();
-                }
-            });
+
+        function open_close() {
+
+            if ($("#order-total").css("display") == "block") {
+
+                $("#order-total").hide();
+                $("#orderBtn").text("Open the Order Box!!!!");
+
+            } else {
+                $("#order-total").show();
+                $("#orderBtn").text("Close the Order Box!!!!");
+            }
+        }
+
+
 
 
         function order_listing() {
@@ -287,6 +302,10 @@
             })
         }
 
+
+
+
+
         // 환율값 실시간으로 가져오기
 
         function get_rate() {
@@ -301,7 +320,28 @@
             })
         }
 
-        function order() {
+         function confirm () { {
+            Swal.fire({
+                title: '정말로 그렇게 하시겠습니까?',
+                text: "다시 되돌릴 수 없습니다. 신중하세요.",
+                icon: 'warning', showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소' }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire( '승인이 완료되었습니다.',
+                                    '화끈하시네요~!',
+                                    'success'
+                        )
+                    }
+                })
+        }
+    };
+
+
+        function order(){
+
 
             let name = $('#order-name').val();
             let count = $('#order-count').val();
@@ -324,16 +364,10 @@
             })
         }
 
-        function open_close() {
-            if ($("#order-total").css("display") == "block") {
-                $("#order-total").hide();
-                $("#orderBtn").text("Open the Order Box!!!!");
 
-            } else {
-                $("#order-total").show();
-                $("#orderBtn").text("Close the Order Box!!!!");
-            }
-        }
+
+
+
 
     </script>
 </head>
@@ -389,7 +423,7 @@
             <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control"
                    id="order-phone" type="text"/>
         </div>
-        <button class="btn btn-primary mybtn" id="buynow" onclick="order()" type="button">Buy Now</button>
+        <button class="btn btn-primary mybtn" id="buynow" onclick="order(); confirm();" type="button">Buy Now</button>
 
 
     <table class="table">
