@@ -333,8 +333,10 @@
                         Swal.fire( '승인이 완료되었습니다.',
                                     '화끈하시네요~!',
                                     'success'
-                        )
-                    }
+                        ).then((result) => {
+                        order();
+                    })
+                }
                 })
         }
     };
@@ -391,7 +393,7 @@
                 <span class="input-group-text">주문자이름</span>
             </div>
             <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control"
-                   id="order-name" type="text">
+                   id="order-name" type="text" maxlength="30" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -414,16 +416,16 @@
                 <span class="input-group-text">주소</span>
             </div>
             <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control"
-                   id="order-address" type="text">
+                   id="order-address" type="text" maxlength="50" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
             </div>
             <input aria-describedby="inputGroup-sizing-default" aria-label="Default" class="form-control"
-                   id="order-phone" type="text"/>
+                   id="order-phone" type="text" maxlength="16"/>
         </div>
-        <button class="btn btn-primary mybtn" id="buynow" onclick="order(); confirm();" type="button">Buy Now</button>
+        <button class="btn btn-primary mybtn" id="buynow" onclick="confirm();" type="button">Buy Now</button>
 
 
     <table class="table">
